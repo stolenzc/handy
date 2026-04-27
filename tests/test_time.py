@@ -1,0 +1,68 @@
+from datetime import datetime, timezone
+from unittest.mock import patch
+
+from handy.commands.time import time
+
+
+def test_base_parse_time(cli):
+    result = cli(time, ["1714339200"])
+    assert result.exit_code == 0
+    lines = [line.strip() for line in result.output.strip().split("\n")]
+    assert "ts     1714339200" in lines
+    assert "space  2024-04-29 05:20:00" in lines
+
+
+def test_millisecond_time(cli):
+    result = cli(time, ["1714339200.123"])
+    assert result.exit_code == 0
+    lines = [line.strip() for line in result.output.strip().split("\n")]
+    assert "ts     1714339200           1714339200.123" in lines
+    assert "space  2024-04-29 05:20:00  2024-04-29 05:20:00.123" in lines
+
+    result = cli(time, ["1714339200123"])
+    assert result.exit_code == 0
+    lines = [line.strip() for line in result.output.strip().split("\n")]
+    assert "ts     1714339200           1714339200.123" in lines
+    assert "space  2024-04-29 05:20:00  2024-04-29 05:20:00.123" in lines
+
+
+@patch("handy.commands.time.datetime", wraps=datetime)
+def test_now_time(mock_datetime, cli):
+    fixed_now = datetime(2024, 4, 29, 13, 20, 0, tzinfo=timezone.utc)
+    mock_datetime.now.return_value = fixed_now
+
+    empty_now = cli(time, [])
+    assert empty_now.exit_code == 0
+    assert "ts     1714396800" in empty_now.output
+    assert "space  2024-04-29 21:20:00" in empty_now.output
+
+    now = cli(time, ["now"])
+    assert now.exit_code == 0
+    assert "ts     1714396800" in now.output
+
+    assert empty_now.output == now.output
+
+
+def test_input_iso_format(cli):
+    result = cli(time, ["2024-04-29T21:20:00+08:00", "--iso"])
+    assert result.exit_code == 0
+    lines = [line.strip() for line in result.output.strip().split("\n")]
+    assert "ts     1714396800" in lines
+    assert "space  2024-04-29 21:20:00" in lines
+    assert "T      2024-04-29T21:20:00+08:00" in lines
+
+    # input without timezone
+    result = cli(time, ["2024-04-29T13:20:00", "--iso"])
+    assert result.exit_code == 0
+    lines = [line.strip() for line in result.output.strip().split("\n")]
+    assert "ts     1714396800" in lines
+    assert "space  2024-04-29 21:20:00" in lines
+    assert "T      2024-04-29T21:20:00+08:00" in lines
+
+    # input with milliseconds
+    result = cli(time, ["2024-04-29T13:20:00.123", "--iso"])
+    assert result.exit_code == 0
+    lines = [line.strip() for line in result.output.strip().split("\n")]
+    assert "ts     1714396800                 1714396800.123" in lines
+    assert "space  2024-04-29 21:20:00        2024-04-29 21:20:00.123" in lines
+    assert "T      2024-04-29T21:20:00+08:00  2024-04-29T21:20:00.123+08:00" in lines
