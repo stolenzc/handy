@@ -1,7 +1,27 @@
+import os
+import time as _time
 from datetime import datetime, timezone
 from unittest.mock import patch
 
+import pytest
+
 from handy.commands.time import time
+
+
+@pytest.fixture(autouse=True)
+def _fixed_timezone():
+    """Lock timezone to Asia/Shanghai for all tests in this file."""
+    original_tz = os.environ.get("TZ")
+    os.environ["TZ"] = "Asia/Shanghai"
+    _time.tzset()
+    try:
+        yield
+    finally:
+        if original_tz is not None:
+            os.environ["TZ"] = original_tz
+        else:
+            os.environ.pop("TZ", None)
+        _time.tzset()
 
 
 def test_base_parse_time(cli):
