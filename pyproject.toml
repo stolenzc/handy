@@ -19,3 +19,20 @@ build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/handy"]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.0.3",
+    "pytest-cov>=7.1.0",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "--cov=handy.commands"
+
+[tool.coverage.run]
+source = ["handy.commands"]
+
+[tool.coverage.report]
+show_missing = true
+fail_under = 95

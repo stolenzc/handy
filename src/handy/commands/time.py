@@ -27,12 +27,6 @@ def _format_results(dt: datetime, iso: bool = False) -> list[str]:
     tz = dt.strftime("%z")
     tz_part = f"{tz[:3]}:{tz[3:]}" if tz else ""
 
-    GREEN = "\033[32;1m"
-    YELLOW = "\033[33m"
-    WHITE = "\033[97m"
-    CYAN = "\033[36m"
-    RESET = "\033[0m"
-
     ts = dt.timestamp()
 
     ts_val1 = str(int(ts))
@@ -55,26 +49,32 @@ def _format_results(dt: datetime, iso: bool = False) -> list[str]:
 
     lines = []
 
-    label = f"{GREEN}{'ts':<6}{RESET}"
+    label = f"{'ts':<6}"
     row = f"{ts_val1:<{col1_width}}"
     if ts_val2:
         row += f"  {ts_val2}"
-    lines.append(f"{label} {YELLOW}{row}{RESET}")
+    lines.append(f"{label} {row}")
 
-    label = f"{GREEN}{'space':<6}{RESET}"
+    label = f"{'space':<6}"
     row = f"{space_val1:<{col1_width}}"
     if space_val2:
         row += f"  {space_val2}"
-    lines.append(f"{label} {WHITE}{row}{RESET}")
+    lines.append(f"{label} {row}")
 
     if iso:
-        label = f"{GREEN}{'T':<6}{RESET}"
+        label = f"{'T':<6}"
         row = f"{t_val1:<{col1_width}}"
         if t_val2:
             row += f"  {t_val2}"
-        lines.append(f"{label} {CYAN}{row}{RESET}")
+        lines.append(f"{label} {row}")
 
     return lines
+
+
+def _build_output(dt: datetime, iso: bool = False) -> str:
+    """Build the full output string for a datetime. Pure function for easy testing."""
+    lines = _format_results(dt, iso)
+    return "\n".join(lines)
 
 
 @click.command()
@@ -90,5 +90,4 @@ def time(value, iso):
         dt = datetime.now().astimezone()
     else:
         dt = _parse_input(value)
-    for line in _format_results(dt, iso):
-        click.echo(line, color=True)
+    click.echo(_build_output(dt, iso), color=True)
