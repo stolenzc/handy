@@ -1,6 +1,6 @@
 import os
 import time
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from unittest.mock import patch
 
 import pytest
@@ -48,7 +48,7 @@ def test_millisecond_time(cli):
 
 @patch("handy.commands.time.datetime", wraps=datetime)
 def test_now_time(mock_datetime, cli):
-    fixed_now = datetime(2024, 4, 29, 13, 20, 0, tzinfo=timezone.utc)
+    fixed_now = datetime(2024, 4, 29, 13, 20, 0, tzinfo=UTC)
     mock_datetime.now.return_value = fixed_now
 
     empty_now = cli(time_cmd, [])

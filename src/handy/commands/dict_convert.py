@@ -3,7 +3,12 @@ import click
 
 @click.command()
 @click.argument("dict_str")
-@click.option("--postman", "-p", is_flag=True, help="Output as Postman params (key:value per line).")
+@click.option(
+    "--postman",
+    "-p",
+    is_flag=True,
+    help="Output as Postman params (key:value per line).",
+)
 def dict_cmd(dict_str, postman):
     """Convert a Python dict literal to URL query string or Postman params.
 

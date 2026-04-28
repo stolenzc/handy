@@ -52,7 +52,12 @@ def test_config_private_key_file(mock_load_config, cli, rsa_key_pair, tmp_path):
 
 
 @patch("handy.commands.decrypt.load_config")
-def test_config_private_key_file_not_exists(mock_load_config, cli, rsa_key_pair, tmp_path):
+def test_config_private_key_file_not_exists(
+    mock_load_config,
+    cli,
+    rsa_key_pair,
+    tmp_path,
+):
     public_key, _ = rsa_key_pair
     en_data = _rsa_encrypt("hello", public_key)
     key_file = tmp_path / "private.pem"
@@ -60,7 +65,8 @@ def test_config_private_key_file_not_exists(mock_load_config, cli, rsa_key_pair,
 
     result = cli(decrypt_cmd, [en_data])
     assert result.exit_code == 1
-    assert "No private key configured. Set 'private_key' or 'private_key_file' in config.json." in result.output
+    assert "No private key configured." in result.output
+    assert "'private_key' or 'private_key_file'" in result.output
 
 
 def test_input_private_key(cli, rsa_key_pair):
