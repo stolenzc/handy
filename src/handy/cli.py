@@ -1,8 +1,9 @@
 import click
 
-from handy.commands.decrypt import decrypt
+from handy.commands.base64_cmd import base64_cmd
+from handy.commands.decrypt import decrypt_cmd
 from handy.commands.dict_convert import dict_cmd
-from handy.commands.time import time as time_cmd
+from handy.commands.time import time_cmd
 from handy.commands.version import version
 
 
@@ -12,9 +13,10 @@ def cli():
     pass
 
 
-cli.add_command(decrypt)
-cli.add_command(time_cmd)
+cli.add_command(base64_cmd)
+cli.add_command(decrypt_cmd)
 cli.add_command(dict_cmd)
+cli.add_command(time_cmd)
 cli.add_command(version)
 
 

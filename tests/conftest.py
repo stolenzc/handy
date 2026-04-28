@@ -2,9 +2,10 @@ import pytest
 from click.testing import CliRunner
 
 # Import all command modules so coverage tracks them even without dedicated tests.
-from handy.commands.decrypt import decrypt  # noqa: F401
+from handy.commands.base64_cmd import base64_cmd  # noqa: F401
+from handy.commands.decrypt import decrypt_cmd  # noqa: F401
 from handy.commands.dict_convert import dict_cmd  # noqa: F401
-from handy.commands.time import time  # noqa: F401
+from handy.commands.time import time_cmd  # noqa: F401
 from handy.commands.version import version  # noqa: F401
 
 

@@ -80,7 +80,7 @@ def _build_output(dt: datetime, iso: bool = False) -> str:
 @click.command()
 @click.argument("value", required=False)
 @click.option("--iso", is_flag=True, help="Show ISO8601 format (T-separated with timezone). example: 2001-01-01T00:00:00+08:00.")
-def time(value, iso):
+def time_cmd(value, iso):
     """Parse a timestamp or date string. Defaults to current time.
 
     Accepts: Unix timestamps (s/ms), ISO8601, or "YYYY-MM-DD HH:MM:SS".

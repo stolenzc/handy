@@ -40,7 +40,7 @@ def load_private_key(config: dict) -> str:
 @click.argument("encrypted")
 @click.option("--key", "key_arg", help="Use this private key directly instead of config.")
 @click.option("--key-file", "key_file", type=click.Path(exists=True), help="Path to a private key file.")
-def decrypt(encrypted, key_arg, key_file):
+def decrypt_cmd(encrypted, key_arg, key_file):
     """Decrypt an RSA-encrypted base64 string."""
     if key_arg:
         private_key = key_arg
