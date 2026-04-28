@@ -24,6 +24,24 @@ uv tool uninstall handy
 uv cache clean && uv tool install . --force
 ```
 
+## Shell 自动补全
+
+安装补全脚本后，按 Tab 键可自动补全子命令和选项。
+
+```bash
+# zsh
+handy completion zsh >> ~/.zshrc
+source ~/.zshrc
+
+# bash
+handy completion bash >> ~/.bashrc
+source ~/.bashrc
+
+# fish
+handy completion fish >> ~/.config/fish/config.fish
+source ~/.config/fish/config.fish
+```
+
 ## 配置
 
 `~/.config/handy/config.json`，字段说明：
