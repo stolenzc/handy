@@ -1,4 +1,4 @@
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 import click
 
@@ -15,7 +15,7 @@ def _parse_input(value: str) -> datetime:
     s = value.replace("Z", "+00:00")
     dt = datetime.fromisoformat(s)
     if dt.tzinfo is None:
-        dt = dt.replace(tzinfo=timezone.utc)
+        dt = dt.replace(tzinfo=UTC)
     return dt.astimezone()
 
 
@@ -79,7 +79,11 @@ def _build_output(dt: datetime, iso: bool = False) -> str:
 
 @click.command()
 @click.argument("value", required=False)
-@click.option("--iso", is_flag=True, help="Show ISO8601 format (T-separated with timezone). example: 2001-01-01T00:00:00+08:00.")
+@click.option(
+    "--iso",
+    is_flag=True,
+    help="Show ISO8601 format (T-separated with timezone). Example: 2001-01-01T00:00:00+08:00.",
+)
 def time_cmd(value, iso):
     """Parse a timestamp or date string. Defaults to current time.
 
