@@ -7,6 +7,7 @@ from handy.commands.completion import completion  # noqa: F401
 from handy.commands.decrypt import decrypt_cmd  # noqa: F401
 from handy.commands.dict_convert import dict_cmd  # noqa: F401
 from handy.commands.time import time_cmd  # noqa: F401
+from handy.commands.url_cmd import url_cmd  # noqa: F401
 from handy.commands.version import version  # noqa: F401
 
 
