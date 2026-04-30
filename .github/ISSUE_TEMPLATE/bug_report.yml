@@ -1,0 +1,57 @@
+name: Bug Report
+description: Report a bug or unexpected behavior
+labels: ["bug"]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened?
+      description: A clear description of the bug.
+      placeholder: "When I do X, Y happens instead of Z."
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: Minimal steps to reproduce the issue.
+      placeholder: |
+        1. Input Something
+        2. Click a button
+        3. Something happens
+        4. ...
+    validations:
+      required: false
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: What did you expect to happen?
+    validations:
+      required: false
+
+  - type: input
+    id: version
+    attributes:
+      label: handy version
+      placeholder: "0.16.0"
+    validations:
+      required: false
+
+  - type: input
+    id: os
+    attributes:
+      label: OS version
+      placeholder: "macOS 15.3 / Linux 5.15.0 / Windows 10"
+    validations:
+      required: false
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Screenshots / Logs
+      description: If applicable, add screenshots, screen recordings, or crash logs.
+    validations:
+      required: false
